@@ -24,7 +24,7 @@ Page({
   },
   gotoGobang(){
     wx.navigateToMiniProgram({
-      appId: 'wxa3ce6501f5756784',
+      appId: '',
       path: 'pages/shouye/shouye', 
       extraData: {
         foo: 'bar'
