@@ -1,4 +1,7 @@
 # 中国象棋小程序优化说明
+体验地址
+![e7617c99a4cf99c278307c7dd02e417](https://github.com/user-attachments/assets/af239357-d7ff-4286-9488-76d1f0f72ee8)
+
 
 ## 1. 棋子定位逻辑修改
 
