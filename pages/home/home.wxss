@@ -1,0 +1,35 @@
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.sudoku-title {
+	margin-top: 100rpx;
+  font-size: 48rpx;
+  color: #2c3e50;
+  font-weight: bold;
+  margin-bottom: 80rpx;
+}
+.menu-button {
+  width: 450rpx;
+  height: 120rpx;
+  background: #f18d7b;
+  border-radius: 120rpx;
+  font-size: 36rpx;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 150rpx;
+  box-shadow: 0 30rpx 30rpx rgba(27, 159, 247, 0.925);
+  transition: all 0.2s;
+}
+.bg-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-image: url("https://cdn.pixabay.com/animation/2024/11/16/02/20/02-20-51-934_512.gif");
+  background-size: cover;       /* 覆盖整个容器 */
+  background-position: center;  /* 居中显示 */
+  background-repeat: no-repeat; /* 不重复 */
+}

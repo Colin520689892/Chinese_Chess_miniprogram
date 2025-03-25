@@ -1,0 +1,397 @@
+/* 全局重置 */
+page, view, text, button, picker, input, switch {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+page {
+  background-color: #f5f5f5;
+  font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+  color: #333;
+}
+
+/* 标题 */
+#game_title {
+  margin: 20rpx auto;
+  height: 80rpx;
+  width: 100%;
+  text-align: center;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #c41e3a;
+  letter-spacing: 2rpx;
+}
+
+/* 主区域布局 */
+#game_zone {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+}
+
+/* 棋盘区域 */
+#game_board {
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 8rpx;
+  padding: 8rpx;
+  width: auto;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.15);
+  overflow: hidden;
+  order: 2;
+}
+
+/* 棋盘背景 */
+#container {
+  position: relative;
+  margin: 0 auto;
+  border-radius: 4rpx;
+  overflow: hidden;
+}
+
+/* 棋子样式 */
+.chess-piece {
+  position: absolute;
+  z-index: 10;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.chess-piece.selected {
+  z-index: 11;
+}
+
+/* 思考中指示器 */
+.thinking {
+  position: absolute;
+  z-index: 20;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; transform: scale(0.95); }
+  50% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 0.5; transform: scale(0.95); }
+}
+
+/* 走棋记录区域 */
+#moves_container {
+  width: 200rpx;
+  padding: 20rpx;
+  background: #fff;
+  border-radius: 8rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.15);
+  margin-bottom: 20rpx;
+  order: 1;
+}
+
+/* 走棋记录列表 */
+.move-list {
+  height: 300rpx;
+  overflow-y: auto;
+  border: 1rpx solid #ddd;
+  border-radius: 6rpx;
+  padding: 8rpx;
+}
+
+/* 走棋记录项 */
+.move-item {
+  padding: 8rpx;
+  font-family: "宋体";
+  font-size: 24rpx;
+}
+
+.move-item.selected {
+  background: #c41e3a;
+  color: #fff;
+}
+
+/* 菜单区域 */
+#game_menu {
+  width: 200rpx;
+  padding: 20rpx;
+  background: #fff;
+  border: 1rpx solid #eee;
+  border-radius: 8rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.05);
+  order: 3;
+}
+
+/* 通用标签样式 */
+.label {
+  font-size: 28rpx;
+  font-weight: 500;
+  margin-bottom: 10rpx;
+  color: #333;
+}
+
+/* Picker 样式 */
+.picker {
+  width: 100%;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  padding: 12rpx;
+  font-size: 24rpx;
+  color: #333;
+  background-color: #fff;
+  margin-bottom: 15rpx;
+}
+
+/* 按钮样式 */
+.button {
+  width: 150rpx;
+  background-color: #c41e3a;
+  color: #fff;
+  border: none;
+  border-radius: 8rpx;
+  padding: 12rpx;
+  font-size: 24rpx;
+  text-align: center;
+  margin-bottom: 15rpx;
+  box-shadow: 0 2rpx 5rpx rgba(196,30,58,0.3);
+}
+
+/* 复选框容器 */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15rpx;
+  padding: 10rpx 0;
+}
+
+.checkbox-container .label {
+  flex: 1;
+  font-size: 24rpx;
+  margin-bottom: 0;
+}
+
+/* 针对小屏幕优化布局 */
+@media (max-width: 768rpx) {
+  #game_zone {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #moves_container, #game_menu {
+    width: 90%;
+    margin-bottom: 20rpx;
+  }
+  
+  #moves_container {
+    order: 1;
+  }
+  
+  #game_board {
+    order: 2;
+  }
+  
+  #game_menu {
+    order: 3;
+  }
+}
+
+/* 测试按钮区域 */
+.test-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+/* 测试按钮样式 */
+.test-button {
+  font-size: 12px;
+  margin: 3px;
+  padding: 0 8px;
+  height: 30px;
+  line-height: 30px;
+}
+
+/* 新增红兵调整按钮样式 */
+.action-button {
+  background-color: #e74c3c;
+  color: #fff;
+  font-size: 28rpx;
+  padding: 10rpx 20rpx;
+  border-radius: 8rpx;
+  margin: 10rpx auto;
+  width: 80%;
+  text-align: center;
+  box-shadow: 0 4rpx 10rpx rgba(231,76,60,0.3);
+}
+
+.action-button:active {
+  background-color: #c0392b;
+  transform: scale(0.98);
+}
+
+/* 棋盘坐标点的样式 */
+.board-point {
+  box-sizing: border-box;
+  cursor: pointer;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.3s, background-color 0.3s;
+  border-radius: 5px;
+}
+
+.board-point.visible {
+  opacity: 1;
+}
+
+.board-point.visible.empty {
+  background-color: rgba(0, 255, 0, 0.2);
+  border: 1px dashed rgba(0, 128, 0, 0.5);
+}
+
+.board-point.visible.has-piece {
+  background-color: rgba(255, 165, 0, 0.2);
+  border: 1px solid rgba(255, 165, 0, 0.5);
+}
+
+.board-point.highlight {
+  background-color: rgba(255, 0, 0, 0.3) !important;
+  border: 2px solid rgba(255, 0, 0, 0.7) !important;
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
+}
+
+.point-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 8px;
+  color: red;
+  text-shadow: 0 0 2px white;
+  white-space: nowrap;
+}
+
+/* 侧边栏切换按钮 */
+.sidebar-toggle {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40rpx;
+  height: 120rpx;
+  background: #c41e3a;
+  border-radius: 8rpx 0 0 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  box-shadow: -2rpx 0 10rpx rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.sidebar-toggle.active {
+  right: 400rpx;
+}
+
+.toggle-icon {
+  color: white;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+/* 侧边栏 */
+.sidebar {
+  position: fixed;
+  right: -400rpx;
+  top: 0;
+  width: 400rpx;
+  height: 100vh;
+  background: white;
+  box-shadow: -4rpx 0 20rpx rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+  z-index: 999;
+  padding: 40rpx 20rpx;
+  overflow-y: auto;
+}
+
+.sidebar.visible {
+  right: 0;
+}
+
+/* 侧边栏分区 */
+.sidebar-section {
+  margin-bottom: 40rpx;
+  padding: 20rpx;
+  background: #f8f8f8;
+  border-radius: 12rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  padding-bottom: 10rpx;
+  border-bottom: 2rpx solid #ddd;
+}
+
+/* 控制项目 */
+.control-item {
+  margin-bottom: 20rpx;
+}
+
+/* 控制按钮 */
+.control-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30rpx;
+}
+
+.control-button {
+  width: 45%;
+  height: 80rpx;
+  background: #c41e3a;
+  color: white;
+  border: none;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 难度控制 */
+.difficulty-item {
+  margin: 20rpx 0;
+}
+
+/* 选项样式 */
+.option-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+/* 将军提示 */
+.check-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(196, 30, 58, 0.9);
+  color: white;
+  padding: 20rpx 40rpx;
+  border-radius: 8rpx;
+  font-size: 36rpx;
+  font-weight: bold;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 1001;
+}
+
+.check-alert.visible {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}

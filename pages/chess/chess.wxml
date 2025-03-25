@@ -1,0 +1,122 @@
+<view id="game_title">中国象棋</view>
+<view id="game_zone">
+  <!-- 走棋记录区域
+  <view id="moves_container">
+    <view class="label">步骤</view>
+    <scroll-view scroll-y="true" class="move-list" bindscrolltolower="onScrollToBottom">
+      <view wx:for="{{moveList}}" wx:key="index" class="move-item {{index === selMoveIndex ? 'selected' : ''}}">
+        {{item}}
+      </view>
+    </scroll-view>
+  </view> -->
+  
+  <!-- 棋盘区域 -->
+  <view id="game_board">
+    <view id="container" 
+          style="position: relative; width: {{boardWidth}}px; height: {{boardHeight}}px;">
+      <image src="../../images/board.jpg" mode="aspectFit" style="width: 100%; height: 100%;"/>
+      
+      <!-- 棋盘坐标点 -->
+      <block wx:for="{{boardPoints}}" wx:key="pos">
+        <view class="board-point {{showBoardPoints ? 'visible' : ''}} {{item.hasPiece ? 'has-piece' : 'empty'}} {{item.highlight ? 'highlight' : ''}}" 
+              style="position: absolute; left: {{item.uiX}}px; top: {{item.uiY}}px; width: {{pieceSize}}px; height: {{pieceSize}}px; z-index: {{item.hasPiece ? 1 : 5}};"
+              data-pos="{{item.pos}}"
+              bindtap="onBoardPointClick">
+          <!-- 显示坐标点标签 -->
+          <text wx:if="{{showBoardPoints}}" class="point-label">{{item.label}}</text>
+        </view>
+      </block>
+      
+      <!-- 棋子渲染区域 -->
+      <block wx:for="{{chessPieces}}" wx:key="sq">
+        <view wx:if="{{item}}" 
+              class="chess-piece {{item.selected ? 'selected' : ''}}" 
+              style="position: absolute; left: {{item.left}}px; top: {{item.top}}px; width: {{pieceSize}}px; height: {{pieceSize}}px;"
+              data-pos="{{item.sq}}" 
+              catchtap="onChessClick">
+          <image src="../../images/{{item.imgName}}.gif" style="width: 100%; height: 100%;"/>
+          <image wx:if="{{item.selected}}" src="../../images/oos.gif" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 2;"/>
+        </view>
+      </block>
+      
+      <!-- 思考中指示器 -->
+      <image wx:if="{{isThinking}}" class="thinking" src="../../images/thinking.gif" 
+             style="position: absolute; left: {{thinkingLeft}}px; top: {{thinkingTop}}px; width: {{thinkingSize}}px; height: {{thinkingSize}}px;"/>
+    </view>
+    <view class="control-buttons">
+      <button class="control-button" bindtap="onClickRestart">重新开始</button>
+      <button class="control-button" bindtap="onClickRetract">悔棋</button>
+    </view>
+  </view>
+  
+  <!-- 侧边栏切换按钮 -->
+  <view class="sidebar-toggle {{sidebarVisible ? 'active' : ''}}" bindtap="toggleSidebar">
+    <text class="toggle-icon">{{sidebarVisible ? '›' : '‹'}}</text>
+  </view>
+  
+  <!-- 侧边栏 -->
+  <view class="sidebar {{sidebarVisible ? 'visible' : ''}}">
+    <view class="sidebar-section">
+      <view class="section-title">游戏控制</view>
+      <view class="control-item">
+        <view class="label">谁先走</view>
+        <picker mode="selector" bindchange="onSelMoveModeChange" value="{{moveModeIndex}}" range="{{moveModeOptions}}">
+          <view class="picker">{{moveModeOptions[moveModeIndex]}}</view>
+        </picker>
+      </view>
+      
+      <view class="control-item">
+        <view class="label">先走让子</view>
+        <picker mode="selector" bindchange="onSelHandicapChange" value="{{handicapIndex}}" range="{{handicapOptions}}">
+          <view class="picker">{{handicapOptions[handicapIndex]}}</view>
+        </picker>
+      </view>
+      
+      <view class="control-buttons">
+        <button class="control-button" bindtap="onClickRestart">重新开始</button>
+        <button class="control-button" bindtap="onClickRetract">悔棋</button>
+      </view>
+    </view>
+    
+    <!--<view class="sidebar-section">
+      <view class="section-title">AI设置</view>
+      <view class="difficulty-item">
+        <view class="label">计算深度</view>
+        <slider min="1" max="5" value="{{depthLevel}}" bindchange="onDepthLevelChange" show-value/>
+      </view>
+      
+      <view class="difficulty-item">
+        <view class="label">思考时间</view>
+        <slider min="1" max="10" value="{{timeLevel}}" bindchange="onTimeLevelChange" show-value/>
+      </view>
+      
+      <view class="difficulty-item">
+        <view class="label">难度级别</view>
+        <picker mode="selector" bindchange="onSelLevelChange" value="{{levelIndex}}" range="{{levelOptions}}">
+          <view class="picker">{{levelOptions[levelIndex]}}</view>
+        </picker>
+      </view>
+    </view>-->
+    
+    <view class="sidebar-section">
+      <view class="section-title">选项</view>
+      <view class="option-item">
+        <view class="label">动画效果</view>
+        <switch checked="{{animated}}" bindchange="onAnimatedChange"/>
+      </view>
+      <view class="option-item">
+        <view class="label">音效</view>
+        <switch checked="{{sound}}" bindchange="onSoundChange"/>
+      </view>
+      <view class="option-item">
+        <view class="label">显示坐标</view>
+        <switch checked="{{showBoardPoints}}" bindchange="toggleBoardPoints"/>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 将军提示 -->
+  <view class="check-alert {{showCheckAlert ? 'visible' : ''}}">
+    将军！
+  </view>
+</view>

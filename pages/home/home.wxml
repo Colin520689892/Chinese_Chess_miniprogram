@@ -1,0 +1,14 @@
+<!--pages/shouye/shouye.wxml-->
+<!-- 在 .wxml 文件中 -->
+<view class="bg-container">
+	<view class="button-container">
+		<!-- 主标题按钮 -->
+		<view class="sudoku-title">象棋ai</view>
+
+		<!-- 游戏操作按钮 -->
+		<view class="menu-button" bindtap="gotoChess">象棋</view>
+		<view class="menu-button" bindtap="gotoGobang">超强五子棋ai</view>
+		<button class="menu-button" open-type="share">分享(^･ω･^)</button>
+	</view>
+</view>
+
